@@ -1,0 +1,44 @@
+
+apiVersion: dragonflydb.io/v1alpha1
+kind: Dragonfly
+metadata:
+  labels:
+    app: dragonfly
+  name: dragonfly
+spec:
+  replicas: 2
+  resources:
+    requests:
+      cpu: 6
+      memory: 42Gi
+    limits:
+      cpu: 6
+      memory: 44Gi
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: dedicated
+            operator: In
+            values:
+            - redis
+  tolerations:
+  - effect: NoExecute
+    key: dedicated
+    operator: Equal
+    value: redis
+  snapshot:
+    cron: "*/10 * * * *"
+    persistentVolumeClaimSpec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 24Gi
+      storageClassName: "standard-rwo"
+  serviceSpec:
+    type: LoadBalancer
+    annotations:
+      cloud.google.com/load-balancer-type: "internal"
+
