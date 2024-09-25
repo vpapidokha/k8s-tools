@@ -9,11 +9,11 @@ spec:
   replicas: 2
   resources:
     requests:
-      cpu: 6
-      memory: 42Gi
+      cpu: 1
+      memory: 500Mi
     limits:
-      cpu: 6
-      memory: 44Gi
+      cpu: 1
+      memory: 500Mi
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -35,7 +35,7 @@ spec:
       - ReadWriteOnce
       resources:
         requests:
-          storage: 24Gi
+          storage: 1Gi
       storageClassName: "standard-rwo"
   serviceSpec:
     type: LoadBalancer
