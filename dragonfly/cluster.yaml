@@ -14,29 +14,6 @@ spec:
     limits:
       cpu: 1
       memory: 500Mi
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: dedicated
-            operator: In
-            values:
-            - redis
-  tolerations:
-  - effect: NoExecute
-    key: dedicated
-    operator: Equal
-    value: redis
-  snapshot:
-    cron: "*/10 * * * *"
-    persistentVolumeClaimSpec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 1Gi
-      storageClassName: "standard-rwo"
   serviceSpec:
     type: LoadBalancer
     annotations:
